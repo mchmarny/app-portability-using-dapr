@@ -1,0 +1,12 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+.DS_Store
+
+deployment/aci/component/store.yaml
+deployment/aci/component/topic.yaml

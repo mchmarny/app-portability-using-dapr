@@ -1,0 +1,9 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: events
+spec:
+  type: pubsub.azure.servicebus
+  metadata:
+  - name: connectionString
+    value: <service bus connection string here>

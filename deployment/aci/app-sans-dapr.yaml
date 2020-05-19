@@ -1,0 +1,24 @@
+type: Microsoft.ContainerInstance/containerGroups
+apiVersion: 2018-10-01
+location: westus
+name: simpleApp
+properties:
+  containers:
+  - name: event-saver
+    properties:
+      image: mchmarny/event-saver:v0.1.5
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 2
+      ports:
+      - port: 8080
+      environmentVariables:
+        - name: PORT
+          value: 8080
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: '8080'

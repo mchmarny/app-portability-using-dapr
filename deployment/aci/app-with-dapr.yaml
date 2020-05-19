@@ -1,0 +1,57 @@
+apiVersion: 2018-06-01
+location: westus
+name: event-saver
+properties:
+  containers:
+  - name: event-saver
+    properties:
+      image: mchmarny/event-saver:v0.1.5
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      environmentVariables:
+        - name: SOURCE_TOPIC_NAME
+          value: events
+        - name: TARGET_STORE_NAME
+          value: store
+      ports:
+      - port: 8080
+  - name: daprd
+    properties:
+      image: daprio/daprd@sha256:59a3ffaa482655ccdf51e4be1bddb744584ed246aeb370c5daa3048c1947d1c1
+      volumeMounts:
+      - name: dapr-logs
+        mountPath: /var/log/pods
+      - name: componentstore
+        mountPath: /components
+      command:
+      - /daprd
+      - --app-id
+      - event-saver
+      - --app-port
+      - 8080
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      ports:
+        - port: 3500
+  osType: Linux
+  restartPolicy: Always
+  ipAddress:
+    ports:
+    # - port: 8080
+    #   protocol: TCP
+    - port: 3500
+      protocol: TCP
+    type: Public
+  volumes:
+  - name: dapr-logs
+    emptyDir: {}
+  - name: componentstore
+    azureFile:
+      shareName: components
+      storageAccountName: eventmakeraci
+      storageAccountKey: seF51PwrZ9RaxO9YHFBkYM5EjSJbPQhV6PD3AvVnRGUrer/sAGI6BwdI64G4c1LUc6xeH3ptmnEC4C9EHXJkRg==
+type: Microsoft.ContainerInstance/containerGroups

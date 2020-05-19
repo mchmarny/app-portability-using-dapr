@@ -1,0 +1,13 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: events
+spec:
+  type: pubsub.kafka
+  metadata:
+    - name: brokers
+      value: "kafka-service:9092"
+    - name: topics
+      value: events
+    - name: authRequired
+      value: "false"
