@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+   daprd:
+     image: daprio/daprd@sha256:59a3ffaa482655ccdf51e4be1bddb744584ed246aeb370c5daa3048c1947d1c1
+     restart: always
+     ports:
+       - "3500:3500"
+     command: /daprd "--app-id event-saver --app-port 8080"
+     volumes:
+       - logs:/var/log/pods
+       - components:/components
+   userapp:
+     depends_on:
+       - daprd
+     image: mchmarny/event-saver:v0.1.5
+     restart: always
+     ports:
+       - "8080:8080"
+     environment:
+       SOURCE_TOPIC_NAME: events
+       MYSQL_DATABASE: store
