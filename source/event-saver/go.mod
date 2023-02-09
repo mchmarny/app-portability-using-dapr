@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/cloudevents/sdk-go/v2 v2.0.0-preview8
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.7.7
 	github.com/golang/protobuf v1.4.1 // indirect
 	github.com/mchmarny/gcputil v0.3.3
 	github.com/mchmarny/godapr v0.7.2
